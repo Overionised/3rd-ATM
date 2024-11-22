@@ -62,7 +62,7 @@ void illusion() {
 
         count++;
     }
-    return
+    return;
 }
 
 // Login Function
