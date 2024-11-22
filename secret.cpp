@@ -168,7 +168,7 @@ void withdrawMoney(int loggedInUserIndex) {
         }
 
         if (tempAmount != 0) {
-            cout << "mate malo penez, zkuste znovu.\n";
+            cout << "nelze zkuste znovu.\n";
             continue;
         }
 
