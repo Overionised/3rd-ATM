@@ -62,6 +62,7 @@ void illusion() {
 
         count++;
     }
+}
 
 // Login Function
 bool login(int &loggedInUserIndex) {
