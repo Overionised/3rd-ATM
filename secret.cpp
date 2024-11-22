@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <chrono>
 
 using namespace std;
 
@@ -21,6 +22,8 @@ void checkBalance(int loggedInUserIndex);
 void withdrawMoney(int loggedInUserIndex);
 void changePIN(int loggedInUserIndex);
 void updateUserData(int loggedInUserIndex, int fieldIndex, int newValue);
+void illusion();
+
 
 // Main Program
 int main() {
@@ -43,6 +46,22 @@ int getInt() {
     }
     return value;
 }
+void illusion() {
+    const string message = "computing beep boop ";
+    const char spinner[] = {'\\', '|', '/', '-'};
+    const int spinnerSize = sizeof(spinner) / sizeof(spinner[0]);
+    int count = 0;
+
+    while (count < 10) {
+        cout << message <<spinner[count % spinnerSize] << "\r";
+        cout.flush();
+
+        auto start = chrono::steady_clock::now();
+        while (chrono::steady_clock::now() - start < chrono::milliseconds(200)) {
+        }
+
+        count++;
+    }
 
 // Login Function
 bool login(int &loggedInUserIndex) {
@@ -107,6 +126,7 @@ void displayMenu(int loggedInUserIndex) {
                 changePIN(loggedInUserIndex);
                 break;
             case 4:
+                illusion();
                 cout << "Thank you for using our ATM. Goodbye!" << endl;
                 break;
             default:
@@ -117,6 +137,7 @@ void displayMenu(int loggedInUserIndex) {
 
 // Check Balance
 void checkBalance(int loggedInUserIndex) {
+    illusion();
     cout << "Your current balance is: " << users[loggedInUserIndex][2] << ",-\n" << endl;
 }
 
@@ -159,6 +180,7 @@ void withdrawMoney(int loggedInUserIndex) {
         cout << "\n";
 
         users[loggedInUserIndex][2] -= amount; // Update balance
+        illusion();
         cout << "Withdrawal successful. New balance: " << users[loggedInUserIndex][2] << "\n" << endl;
         break;
     }
@@ -181,6 +203,7 @@ void changePIN(int loggedInUserIndex) {
 
     if (newPIN == confirmPIN) {
         users[loggedInUserIndex][1] = newPIN; // Update PIN
+        illusion();
         cout << "PIN changed successfully.\n" << endl;
     } else {
         cout << "PINs do not match. Try again.\n" << endl;
