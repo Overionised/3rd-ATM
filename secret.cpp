@@ -31,7 +31,7 @@ int main() {
     if (login(loggedInUserIndex)) {
         displayMenu(loggedInUserIndex);
     } else {
-        cout << "Too many failed attempts. Goodbye!" << endl;
+        cout << "moc pokusu konec programu!" << endl;
     }
     return 0;
 }
@@ -40,7 +40,7 @@ int main() {
 int getInt() {
     int value;
     while (!(cin >> value) || value < 0) {
-        cout << "Please enter a valid number: ";
+        cout << "zadejte vhodne cislo: ";
         cin.clear();
         cin.ignore(10000, '\n');
     }
@@ -70,7 +70,7 @@ bool login(int &loggedInUserIndex) {
     int cardNumber, pin, attempts = 3;
 
     while (attempts > 0) {
-        cout << "Enter your 6-digit card number: ";
+        cout << "napiste 6 ciselne cislo karty: ";
         cardNumber = getInt();
 
         // Check if card number exists
@@ -83,20 +83,20 @@ bool login(int &loggedInUserIndex) {
         }
 
         if (loggedInUserIndex == -1) {
-            cout << "Card number not found. Attempts left: " << --attempts << endl;
+            cout << "karta nenalezena, pokusy: " << --attempts << endl;
             continue;
         }
 
         // PIN Verification
         while (attempts > 0) {
-            cout << "Enter your 4-digit PIN: ";
+            cout << "napiste 4-mistny PIN: ";
             pin = getInt();
 
             if (users[loggedInUserIndex][1] == pin) {
-                cout << "Login successful!\n" << endl;
+                cout << "Login uspesny!\n" << endl;
                 return true;
             } else {
-                cout << "Incorrect PIN. Attempts left: " << --attempts << endl;
+                cout << "spatny PIN. pokusy: " << --attempts << endl;
             }
         }
         return false; // Failed PIN verification
@@ -110,11 +110,11 @@ void displayMenu(int loggedInUserIndex) {
     int choice;
     do {
         cout << "\n--- Main Menu ---" << endl;
-        cout << "1. Check Balance" << endl;
-        cout << "2. Withdraw Money" << endl;
-        cout << "3. Change PIN" << endl;
-        cout << "4. Exit" << endl;
-        cout << "Select an option: ";
+        cout << "1. zustatek na uctu" << endl;
+        cout << "2. vybrat hotovost" << endl;
+        cout << "3. Zmena PINu" << endl;
+        cout << "4. konec" << endl;
+        cout << "vyberte moznost: ";
         choice = getInt();
 
         switch (choice) {
@@ -129,10 +129,10 @@ void displayMenu(int loggedInUserIndex) {
                 break;
             case 4:
                 illusion();
-                cout << "Thank you for using our ATM. Goodbye!" << endl;
+                cout << "nashledanou!" << endl;
                 break;
             default:
-                cout << "Invalid choice. Please try again.\n";
+                cout << "nevhodna volba. zkuste znovu.\n";
         }
     } while (choice != 4);
 }
@@ -140,7 +140,7 @@ void displayMenu(int loggedInUserIndex) {
 // Check Balance
 void checkBalance(int loggedInUserIndex) {
     illusion();
-    cout << "Your current balance is: " << users[loggedInUserIndex][2] << ",-\n" << endl;
+    cout << "mate: " << users[loggedInUserIndex][2] << ",-\n" << endl;
 }
 
 // Withdraw Money
@@ -150,12 +150,12 @@ void withdrawMoney(int loggedInUserIndex) {
     int numDenominations = sizeof(denominations) / sizeof(denominations[0]);
 
     while (true) {
-        cout << "Enter the amount to withdraw: ";
+        cout << "zvolte pocet penez: ";
         amount = getInt();
 
         // Validate amount
         if (amount <= 0 || amount > users[loggedInUserIndex][2]) {
-            cout << "Invalid amount or insufficient balance. Please try again.\n";
+            cout << "nelze, zkuste znovu.\n";
             continue;
         }
 
@@ -168,12 +168,12 @@ void withdrawMoney(int loggedInUserIndex) {
         }
 
         if (tempAmount != 0) {
-            cout << "The amount cannot be dispensed with available denominations. Try again.\n";
+            cout << "mate malo penez, zkuste znovu.\n";
             continue;
         }
 
         // Dispense money
-        cout << "Dispensing: ";
+        cout << "vydavam: ";
         for (int i = 0; i < numDenominations; i++) {
             if (notesCount[i] > 0) {
                 cout << notesCount[i] << "x" << denominations[i] << " ";
@@ -183,7 +183,7 @@ void withdrawMoney(int loggedInUserIndex) {
 
         users[loggedInUserIndex][2] -= amount; // Update balance
         illusion();
-        cout << "Withdrawal successful. New balance: " << users[loggedInUserIndex][2] << "\n" << endl;
+        cout << "uspesny vyber penez, novy zustatek: " << users[loggedInUserIndex][2] << "\n" << endl;
         break;
     }
 }
@@ -192,7 +192,7 @@ void withdrawMoney(int loggedInUserIndex) {
 void changePIN(int loggedInUserIndex) {
     int newPIN, confirmPIN;
 
-    cout << "Enter your new 4-digit PIN: ";
+    cout << "napiste svuj novy 4-mistny PIN: ";
     newPIN = getInt();
 
     if (newPIN < 1000 || newPIN > 9999) {
@@ -200,14 +200,14 @@ void changePIN(int loggedInUserIndex) {
         return;
     }
 
-    cout << "Confirm your new PIN: ";
+    cout << "potvrdte PIN: ";
     confirmPIN = getInt();
 
     if (newPIN == confirmPIN) {
         users[loggedInUserIndex][1] = newPIN; // Update PIN
         illusion();
-        cout << "PIN changed successfully.\n" << endl;
+        cout << "PIN zmenen uspesne.\n" << endl;
     } else {
-        cout << "PINs do not match. Try again.\n" << endl;
+        cout << "PINs se neschoduji.\n" << endl;
     }
 }
