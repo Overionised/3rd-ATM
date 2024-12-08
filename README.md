@@ -1,4 +1,4 @@
-##NOT FINISHED YET!
+
 
 # atm bankomat
 
